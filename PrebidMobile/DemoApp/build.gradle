@@ -10,6 +10,7 @@ android {
         targetSdkVersion rootProject.targetSDKVersion
         versionCode rootProject.prebidVersionCode
         versionName rootProject.prebidVersionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
     buildTypes {
@@ -25,14 +26,20 @@ android {
     lintOptions {
         abortOnError false
     }
+
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:appcompat-v7:25.4.0'
     compile 'com.google.android.gms:play-services-ads:10.2.0'
     compile('com.mopub:mopub-sdk:4.15.0@aar') {
         transitive = true
     }
     compile project(":PrebidMobileCore")
     compile project(":PrebidServerAdapter")
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.0'
+    androidTestCompile 'com.android.support.test:runner:1.0.0'
+    androidTestCompile 'com.android.support.test.espresso:espresso-web:3.0.0'
+    androidTestCompile 'com.xamarin.testcloud:espresso-support:1.3'
+    testCompile 'junit:junit:4.12'
 }
