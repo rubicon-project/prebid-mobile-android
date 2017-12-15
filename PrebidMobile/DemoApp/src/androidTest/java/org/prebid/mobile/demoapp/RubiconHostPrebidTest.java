@@ -141,7 +141,6 @@ public class RubiconHostPrebidTest {
                 }
 
                 ViewGroup group = (ViewGroup) view.getParent();
-                System.out.println("group " + group.toString());
                 return parentMatcher.matches(view.getParent()) && group.getChildAt(childPosition).equals(view);
             }
         };
