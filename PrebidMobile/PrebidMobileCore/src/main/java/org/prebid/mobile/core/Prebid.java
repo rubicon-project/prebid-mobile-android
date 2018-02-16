@@ -56,6 +56,44 @@ public class Prebid {
         RUBICON
     }
 
+    public enum ViewabilityVendor {
+        ACTIVE_VIEW,
+        AD_FORM,
+        COMSCORE,
+        DOUBLE_VERIFY,
+        INTEGRAL_AD_SCIENCE,
+        MOAT,
+        SIZMEK,
+        WHITEOPS;
+
+        public static String getValue(ViewabilityVendor viewabilityVendor) {
+            if (viewabilityVendor == null) {
+                return null;
+            }
+            switch (viewabilityVendor) {
+                case ACTIVE_VIEW:
+                    return "doubleclickbygoogle";
+                case AD_FORM:
+                    return "adform";
+                case COMSCORE:
+                    return "comscore";
+                case DOUBLE_VERIFY:
+                    return "doubleverify";
+                case INTEGRAL_AD_SCIENCE:
+                    return "integralads";
+                case MOAT:
+                    return "moat";
+                case SIZMEK:
+                    return "sizmek";
+                case WHITEOPS:
+                    return "whiteops";
+                default:
+                    return null;
+            }
+        }
+    }
+
+
     //region Public APIs
 
     /**

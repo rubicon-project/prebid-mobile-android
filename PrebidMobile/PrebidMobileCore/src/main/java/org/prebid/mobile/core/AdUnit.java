@@ -27,6 +27,7 @@ public abstract class AdUnit {
     protected String code; // Unique code for AdUnit set by user.
     protected String configId; // Config Id for prebid server
     protected ArrayList<AdSize> sizes;
+    protected Viewability viewability;
     //endregion
 
     //region Constructors
@@ -40,6 +41,7 @@ public abstract class AdUnit {
         this.code = code;
         this.configId = configId;
         sizes = new ArrayList<AdSize>();
+        viewability = new Viewability();
         generateNewAuctionId();
     }
     //endregion
@@ -77,6 +79,19 @@ public abstract class AdUnit {
      */
     public ArrayList<AdSize> getSizes() {
         return sizes;
+    }
+
+    /**
+     * Gets the viewability dataset for the ad unit
+     *
+     * @return Viewability
+     */
+    public Viewability getViewability() {
+        return viewability;
+    }
+
+    public void setViewability(Viewability viewability) {
+        this.viewability = viewability;
     }
 
     /**

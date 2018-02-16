@@ -24,6 +24,7 @@ import org.prebid.mobile.core.ErrorCode;
 import org.prebid.mobile.core.LogUtil;
 import org.prebid.mobile.core.Prebid;
 import org.prebid.mobile.core.TargetingParams;
+import org.prebid.mobile.core.Viewability;
 import org.prebid.mobile.prebidserver.internal.AdvertisingIDUtil;
 import org.prebid.mobile.prebidserver.internal.Settings;
 
@@ -266,6 +267,12 @@ public class PrebidServerAdapter implements DemandAdapter, ServerConnector.Serve
                 imp.put("ext", ext);
                 JSONObject prebid = new JSONObject();
                 ext.put("prebid", prebid);
+
+                JSONArray viewabilityVendors = getViewabilityVendors(adUnit);
+                if (viewabilityVendors != null && viewabilityVendors.length() != 0) {
+                    ext.put("viewabilityvendors", viewabilityVendors);
+                }
+
                 JSONObject storedrequest = new JSONObject();
                 prebid.put("storedrequest", storedrequest);
                 storedrequest.put("id", adUnit.getConfigId());
@@ -277,11 +284,51 @@ public class PrebidServerAdapter implements DemandAdapter, ServerConnector.Serve
                 }
                 banner.put("format", format);
                 imp.put("banner", banner);
+
+                JSONArray metric = getViewabilityMetics(adUnit);
+                if (metric != null && metric.length() != 0)
+                    imp.put("metric", metric);
+
                 impConfigs.put(imp);
             } catch (JSONException e) {
             }
         }
         return impConfigs;
+    }
+
+    private JSONArray getViewabilityMetics(AdUnit adUnit) {
+        JSONArray metrics = new JSONArray();
+
+        try {
+            Viewability viewability = adUnit.getViewability();
+            if (viewability != null && viewability.getScore() > 0) {
+                double score = viewability.getScore();
+                JSONObject metricsObj = new JSONObject();
+                metricsObj.put("type","viewability");
+                metricsObj.put("value",score);
+                metricsObj.put("vendor","seller-declared");
+                metrics.put(metricsObj);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return metrics;
+    }
+
+    private JSONArray getViewabilityVendors(AdUnit adUnit) {
+        JSONArray viewabilityVendors = new JSONArray();
+
+        Viewability v = adUnit.getViewability();
+        if (v != null) {
+            for (Prebid.ViewabilityVendor vendor : v.getVendors()) {
+                String vendorName = Prebid.ViewabilityVendor.getValue(vendor);
+                if (vendorName != null && !vendorName.isEmpty())
+                   viewabilityVendors.put(vendorName);
+            }
+        }
+
+        return viewabilityVendors;
     }
 
     private JSONObject getDeviceObject(Context context) {

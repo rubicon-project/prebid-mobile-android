@@ -14,8 +14,11 @@ import com.mopub.mobileads.MoPubErrorCode;
 import com.mopub.mobileads.MoPubView;
 
 import org.prebid.mobile.core.Prebid;
+import org.prebid.mobile.core.Viewability;
 import org.prebid.mobile.demoapp.Constants;
 import org.prebid.mobile.demoapp.R;
+
+import java.util.ArrayList;
 
 public class MoPubBannerFragment extends Fragment implements Prebid.OnAttachCompleteListener, MoPubView.BannerAdListener {
 
@@ -52,6 +55,13 @@ public class MoPubBannerFragment extends Fragment implements Prebid.OnAttachComp
         adView.setMinimumHeight(50);
         adView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.TOP | Gravity.CENTER_HORIZONTAL));
         adFrame.addView(adView);
+
+        ArrayList<Prebid.ViewabilityVendor> vendors = new ArrayList<Prebid.ViewabilityVendor>();
+        vendors.add(Prebid.ViewabilityVendor.COMSCORE);
+        vendors.add(Prebid.ViewabilityVendor.DOUBLE_VERIFY);
+        Viewability.updateScore(0.99, Constants.BANNER_320x50);
+        Viewability.updateVendors(vendors, Constants.BANNER_320x50);
+
         Prebid.attachBids(adView, Constants.BANNER_320x50, this.getActivity());
         adView.loadAd();
     }
