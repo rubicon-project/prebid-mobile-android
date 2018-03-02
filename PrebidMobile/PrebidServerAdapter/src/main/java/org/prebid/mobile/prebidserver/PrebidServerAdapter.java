@@ -270,7 +270,7 @@ public class PrebidServerAdapter implements DemandAdapter, ServerConnector.Serve
 
                 JSONArray viewabilityVendors = getViewabilityVendors(adUnit);
                 if (viewabilityVendors != null && viewabilityVendors.length() != 0) {
-                    ext.put("viewabilityvendors", viewabilityVendors);
+                    prebid.put("viewabilityvendors", viewabilityVendors);
                 }
 
                 JSONObject storedrequest = new JSONObject();

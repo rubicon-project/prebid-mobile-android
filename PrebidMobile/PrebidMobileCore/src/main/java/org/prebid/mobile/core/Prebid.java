@@ -72,7 +72,7 @@ public class Prebid {
             }
             switch (viewabilityVendor) {
                 case ACTIVE_VIEW:
-                    return "doubleclickbygoogle";
+                    return "active_view";
                 case AD_FORM:
                     return "adform";
                 case COMSCORE:
